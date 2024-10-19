@@ -1,0 +1,31 @@
+services:
+  postgres-database:
+    container_name: sd-postgres-container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: u_swagger
+      POSTGRES_PASSWORD: p_swagger
+      POSTGRES_DB: db_swagger
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: sd-pgadmin-container
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - 5051:5050
+    volumes:
+      - pgadmin-volume:/var/lib/pgadmin
+    depends_on:
+      - postgres-database
+
+volumes:
+  postgres-volume:
+  pgadmin-volume:
